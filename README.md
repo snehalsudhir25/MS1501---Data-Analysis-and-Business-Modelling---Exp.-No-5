@@ -42,6 +42,109 @@ The dataset consists of 16 manually entered customer data points representing tw
 | **Visualization (Matplotlib)** | `plt.scatter()` | Plots the data points and centroids in a 2D scatter plot |
 | | `plt.title()`, `plt.xlabel()`, `plt.ylabel()`, `plt.legend()`, `plt.grid()`, `plt.show()` | Configures labels, legend, gridlines, and displays the final graph |
 
-## Program & Output
+## Input 1
+```
+# 1. Import required libraries
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
 
+# 2. Define manual data arrays
+x = np.array([20, 22, 25, 70, 75, 80, 30, 35,
+              32, 24, 28, 75, 71, 83, 28, 27])
+
+y = np.array([30, 35, 40, 80, 85, 90, 70, 75,
+              33, 31, 45, 70, 83, 89, 60, 67])
+
+# 3. Combine X and Y values
+X = np.column_stack((x, y))
+X
+```
+## Output 1
+```
+array([[20, 30],
+       [22, 35],
+       [25, 40],
+       [70, 80],
+       [75, 85],
+       [80, 90],
+       [30, 70],
+       [35, 75],
+       [32, 33],
+       [24, 31],
+       [28, 45],
+       [75, 70],
+       [71, 83],
+       [83, 89],
+       [28, 60],
+       [27, 67]])
+```
+## Input 2
+```
+# 4. Apply K-Means clustering
+kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
+labels = kmeans.fit_predict(X)
+labels
+```
+## Output 2
+```
+array([1, 1, 1, 0, 0, 0, 2, 2, 1, 1, 1, 0, 0, 0, 2, 2], dtype=int32)
+```
+## Input 3
+```
+# 5. Retrieve cluster centroids
+centroids = kmeans.cluster_centers_
+centroids
+```
+## Output 3
+```
+array([[75.66666667, 82.83333333],
+       [25.16666667, 35.66666667],
+       [30.        , 68.        ]])
+```
+## Input 4
+```
+# 6. Visualize clusters
+plt.figure(figsize=(8, 6))
+
+plt.scatter(X[:, 0], X[:, 1],
+            c=labels, cmap='viridis',
+            s=100, alpha=0.8)
+
+plt.scatter(centroids[:, 0], centroids[:, 1],
+            c='red', marker='X',
+            s=200, label='Centroids')
+
+plt.title('K-Means Clustering for Market Segmentation')
+plt.xlabel('Feature 1 (Annual Income)')
+plt.ylabel('Feature 2 (Spending Score)')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+## Output 4
+
+<img width="686" height="547" alt="image" src="https://github.com/user-attachments/assets/5d7bacca-a333-41ab-a828-b30ebea2d331" />
+
+## Input 5
+```
+# 7. Display cluster details
+print("Cluster Labels for Data Points:")
+print(labels)
+
+print("\nCluster Centroids (Coordinates):")
+print(centroids)
+```
+## Output 5
+```
+Cluster Labels for Data Points:
+[1 1 1 0 0 0 2 2 1 1 1 0 0 0 2 2]
+
+Cluster Centroids (Coordinates):
+[[75.66666667 82.83333333]
+ [25.16666667 35.66666667]
+ [30.         68.        ]]
+```
 ## Result
+
+Thus, the K-Means Clustering algorithm was implemented using Python to group similar data points into distinct clusters. The clusters were visualized and analysed for market segmentation, and the objective was successfully achieved.
